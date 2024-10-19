@@ -1,0 +1,12 @@
+starbucks_dw:
+  outputs:
+    data_warehouse:
+      dbname: dw_starbucks
+      host: localhost
+      pass: password1
+      port: 5432
+      schema: public
+      threads: 1
+      type: postgres
+      user: dbt
+  target: data_warehouse
