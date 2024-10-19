@@ -21,7 +21,13 @@ In the folder `starbucks_dw`, run the following commands:
     make setup-postgres-db
 ```
 
-4. Check the database connection:
+4. Install pre-commit hooks:
+
+```
+    pre-commit install
+```
+
+5. Check the database connection:
 
 ```
     make dbt-debug
