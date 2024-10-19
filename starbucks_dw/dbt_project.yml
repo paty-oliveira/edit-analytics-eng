@@ -19,5 +19,4 @@ models:
   starbucks_dw:
 
 seeds:
-# Add database schema for seeds
-#  +schema:
+  +schema: raw
