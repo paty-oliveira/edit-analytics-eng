@@ -1,7 +1,6 @@
 SCRIPT_VENV = ../scripts/python_venv.sh
 SCRIPT_DBT = ../scripts/dbt.sh
 DBT_PROFILES_DIR = ./
-DBT_ARTIFACTS_FOLDER = ./target
 
 # Help command to display available targets
 help:
@@ -45,10 +44,6 @@ dbt-compile: ## Compile models for the entire project
 	@echo "Compiling models for the entire project..."
 	@dbt compile
 
-dbt-compile-modified-models: ## Compile only modified models
-	@echo "Compiling modified models..."
-	@dbt compile --select state:modified --state ${DBT_ARTIFACTS_FOLDER}
-
 dbt-seed: ## Load seed data into the data warehouse
 	@echo "Loading seed data..."
 	@dbt seed
@@ -57,17 +52,9 @@ dbt-run: ## Run models for the entire project
 	@echo "Running models for the entire project..."
 	@dbt run
 
-dbt-run-modified-models: ## Run only modified models
-	@echo "Building modified models..."
-	@dbt run --select state:modified --state ${DBT_ARTIFACTS_FOLDER}
-
 dbt-test: ## Run tests for the entire project
 	@echo "Running tests for the entire project..."
 	@dbt test
-
-dbt-test-modified-models: ## Run tests for modified models
-	@echo "Running tests for modified models..."
-	@dbt test --select state:modified --state ${DBT_ARTIFACTS_FOLDER}
 
 dbt-generate-docs: ## Generate and serve dbt documentation
 	@echo "Generating project's documentation..."
