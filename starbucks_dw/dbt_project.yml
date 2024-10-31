@@ -19,6 +19,8 @@ models:
   starbucks_dw:
     staging:
       +schema: staging
+    marts:
+      +schema: marts
 
 seeds:
   +schema: raw
