@@ -55,3 +55,84 @@ models:
         data_type: timestamp
         data_tests:
           - not_null
+
+  - name: fct_offer_transactions
+    description: >
+      Fact table about the transactions that are part of the promotional offers program.
+    columns:
+      - name: offer_transaction_key
+        description: Unique identifier for each offer performance.
+        data_type: text
+        data_tests:
+          - not_null
+          - unique
+      - name: offer_id
+        description: Unique identifier for each offer.
+        data_type: text
+      - name: transaction_id
+        description: Unique identifier for each transaction.
+        data_type: text
+        data_tests:
+          - not_null
+      - name: offer_type
+        description: Type of offer.
+        data_type: text
+        data_tests:
+          - not_null
+          - accepted_values:
+              values:
+                - bogo
+                - discount
+                - informational
+      - name: offer_channel
+        description: A list of channels through which the offer was received.
+        data_type: text
+        data_tests:
+          - not_null
+          - accepted_values:
+              values:
+                - email
+                - mobile
+                - social
+                - web
+      - name: offer_difficulty_rank
+        description: Minimum spending required to complete an offer.
+        data_type: integer
+        data_tests:
+          - not_null
+      - name: offer_duration
+        description: Time in minutes for the offer to be open.
+        data_type: integer
+        data_tests:
+          - not_null
+      - name: offer_reward
+        description: Reward given upon completion of the offer.
+        data_type: numeric
+        data_tests:
+          - not_null
+      - name: transaction_status
+        description: Status of the transaction.
+        data_type: text
+        data_tests:
+          - not_null
+          - accepted_values:
+              values:
+                - received
+                - viewed
+                - completed
+                - transaction
+      - name: hours_since_start
+        description: Time in hours since the offer was received.
+        data_type: numeric
+        data_tests:
+          - not_null
+      - name: days_since_start
+        description: Time in days since the offer was received.
+        data_type: numeric
+        data_tests:
+          - not_null
+      - name: ingested_at
+        description: Timestamp when the data was ingested.
+        data_type: timestamp
+        data_tests:
+          - not_null
