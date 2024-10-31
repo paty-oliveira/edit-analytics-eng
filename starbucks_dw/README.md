@@ -35,7 +35,7 @@ Potential business questions:
 ## Conceptual Model
 
 The following image shows the conceptual model of the Starbucks Customer data. Each box represents a business's entity on the Starbucks's business processes. The
-business process events represented on three datasets provided are: **transaction** and **promotional offer**.
+business process events represented on the three datasets provided are: **transaction** and **promotional offer**.
 
 ![Conceptual Model](../img/conceptual-model.png)
 
@@ -46,7 +46,7 @@ Entities which provide context to the **business process event**: (*who*, *what*
 
 Entites which aggregate the context and measures of a **business process event**:
 - **customer_transactions**
-- **offer_performance**
+- **offer_transactions**
 
 ## Data Models Layers
 The following diagram shows how it will look like our final data models, splited in different layers:
