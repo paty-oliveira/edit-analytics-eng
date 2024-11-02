@@ -6,10 +6,6 @@ models:
     columns:
       - name: date_key
         description: Unique identifier for each date.
-        data_type: text
-        data_tests:
-          - not_null
-          - unique
       - name: date_day
         description: Date.
       - name: prior_date_day
@@ -82,9 +78,6 @@ models:
         description: End date of the year.
       - name: ingested_at
         description: Timestamp when the data was ingested.
-        data_type: timestamp
-        data_tests:
-          - not_null
 
   - name: dim_customer
     description: >

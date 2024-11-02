@@ -1,4 +1,4 @@
-{{
+{# {{
   config(
     materialized = 'table',
     )
@@ -14,7 +14,7 @@
 with
     customers as (
         select customer_id, gender, age, income, subscribed_date
-        from {{ ref('stg_customer') }}
+        from {{ ref('stg_profile') }}
     ),
 
     transactions as (
@@ -49,4 +49,4 @@ with
     )
 
 select *
-from final
+from final #}
