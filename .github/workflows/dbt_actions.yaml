@@ -1,0 +1,45 @@
+name: dbt ci/cd pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+env:
+  DBT_PROFILES_DIR: ./starbucks_dw
+  DBT_PROJECT_DIR: ./starbucks_dw
+
+jobs:
+  build_and_test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install Python dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run docker Compose
+        run: docker compose up -d
+
+      - name: Check database connection
+        run: dbt debug
+
+      - name: Install dbt packages
+        run: dbt deps
+
+      # - name: Load source data
+      #   run: dbt seed
+
+      # - name: Run models
+      #   run: dbt run
+
+      # - name: Test models
+      #   run: dbt test
