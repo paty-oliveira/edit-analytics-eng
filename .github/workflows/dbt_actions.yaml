@@ -35,11 +35,14 @@ jobs:
       - name: Install dbt packages
         run: dbt deps
 
-      # - name: Load source data
-      #   run: dbt seed
+      - name: Compile dbt models
+        run: dbt compile
 
-      # - name: Run models
-      #   run: dbt run
+      - name: Load source data
+        run: dbt seed
 
-      # - name: Test models
-      #   run: dbt test
+      - name: Run models
+        run: dbt run
+
+      - name: Test models
+        run: dbt test
