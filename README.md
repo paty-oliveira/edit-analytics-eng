@@ -1,5 +1,14 @@
 # Analytics Engineering Module
 
+## How to start
+1. Fork this repository and clone it locally. Check this [tutorial](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo) if you have doubts how to fork a repository.
+2. Setup your local [enviroment](#setup-the-environment).
+3. Load the [data sources](#load-data-sources).
+4. Solve the exercises provided during the classrooms, by committing your changes.
+5. Once all exercises are completed, create a Pull request to this repository. If you have doubts about how to create a pull request from a fork, please check this [tutorial](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request-from-a-fork).
+6. Check if your solution passes on the automated tests.
+
+
 ## Setup the environment
 In the folder `starbucks_dw`, run the following commands:
 
