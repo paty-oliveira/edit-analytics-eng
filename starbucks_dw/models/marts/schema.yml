@@ -4,8 +4,6 @@ models:
   - name: dim_date
     description: Dimension table about the date.
     columns:
-      - name: date_key
-        description: Unique identifier for each date.
       - name: date_day
         description: Date.
       - name: prior_date_day
