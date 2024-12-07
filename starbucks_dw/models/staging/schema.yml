@@ -97,3 +97,40 @@ models:
         data_type: timestamp
         data_tests:
           - not_null
+
+  - name: stg_profile
+    description: >
+      Information about the customer age, gender, income and date where becomes a member.
+    columns:
+      - name: a
+        description: Incremental counter for each row.
+        data_type: numeric
+        data_tests:
+          - not_null
+          - unique
+      - name: gender
+        description: Gender of the customer.
+        data_type: text
+      - name: age
+        description: Age of the customer.
+        data_type: integer
+      - name: customer_id
+        description: Unique identifier/Surogate key for each client.
+        data_type: numeric
+        data_tests:
+          - not_null
+      - name: become_member_on
+        description: Date when the customer created an app account.
+        data_type: date
+        data_tests:
+          - not_null
+      - name: income
+        description: Income of the customer.
+        data_type: numeric
+        data_tests:
+          - not_null
+      - name: ingested_at
+        description: Timestamp when the data was ingested.
+        data_type: timestamp
+        data_tests:
+          - not_null
