@@ -7,3 +7,10 @@ macros:
       - name: hours
         description: Number of hours.
         type: integer
+  
+  - name: format_transaction_type
+    description: Define new column based on condicional statments on transaction_type.
+    arguments:
+      - name: transactions.transaction_type
+        description: transation status.
+        type: string
