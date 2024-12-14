@@ -53,20 +53,35 @@ models:
       - name: gender
         description: Gender of the customer.
         data_type: text
+        data_tests:
+          - not_null
+          - accepted_values:
+              values:
+                - M
+                - F
+                - O
+                - N/A
       - name: age
         description: Age of the customer.
         data_type: integer
+        data_tests:
+          - not_null
       - name: customer_id
         description: Unique identifier for each customer.
         data_type: text
         data_tests:
           - not_null
-      - name: become_member_on
+          - unique
+      - name: subscribed_date
         description: Date when the customer createdan app account.
         data_type: integer
+        data_tests:
+          - not_null
       - name: income
         description: Income of the customer.
         data_type: numeric
+        data_tests:
+          - not_null
 
   - name: stg_transcript
     description: >
