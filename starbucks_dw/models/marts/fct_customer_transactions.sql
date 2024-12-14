@@ -4,6 +4,12 @@
     )
 }}
 
+
+
+
+-- teste
+
+
 {% set surrogate_key_columns = [
     'transactions.transaction_id',
     'transactions.customer_id',
