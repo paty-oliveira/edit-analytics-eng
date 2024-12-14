@@ -105,16 +105,22 @@ models:
       - name: gender
         description: Gender of the customer.
         data_type: text
+        data_tests:
+          - not_null
       - name: age
         description: Age of the customer.
         data_type: integer
+        data_tests:
+          - not_null
+        accepted_values:
+          - values: ['M', 'F', 'O', 'N/A']
       - name: customer_id
         description: Unique identifier/Surogate key for each client.
         data_type: numeric
         data_tests:
           - not_null
           - unique
-      - name: become_member_on
+      - name: became_member_on
         description: Date when the customer created an app account.
         data_type: date
         data_tests:
