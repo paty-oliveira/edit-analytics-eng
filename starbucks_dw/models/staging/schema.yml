@@ -123,7 +123,7 @@ models:
         data_type: integer
         data_tests:
           - not_null
-      - name: became_member_on
+      - name: subscribed_date
         description: Date when the customer created an app account.
         data_type: date
         data_tests:
