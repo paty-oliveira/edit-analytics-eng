@@ -107,13 +107,13 @@ models:
         data_type: text
         data_tests:
           - not_null
+          - accepted_values:
+              values: ['M', 'F', 'O', 'N/A']
       - name: age
         description: Age of the customer.
         data_type: integer
         data_tests:
           - not_null
-        accepted_values:
-          - values: ['M', 'F', 'O', 'N/A']
       - name: customer_id
         description: Unique identifier/Surogate key for each client.
         data_type: numeric
