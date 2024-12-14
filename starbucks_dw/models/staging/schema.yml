@@ -102,28 +102,40 @@ models:
     description: >
       Information about the customers that are part of the promotional offers program.
     columns:
-      - name: a
-        description: "Incremental counter for each row."
-        data_type: integer
-      - name: gender
-        description: "Gender of the customer."
+      - name: customer_id
+        description: Unique identifier for each customer.
         data_type: text
         data_test:
           - not_null
+          - unique
       - name: age
-        description: "Age of the customer."
+        description: Age of the customer.
         data_type: integer
-      - name: customer_id
-        description: "Unique identifier for each customer."
+        data test:
+          - not_null
+      - name: gender
+        description: Gender of the customer.
         data_type: text
-      - name: become_member_date
-        description: "Date when the customer created an app account."
-        data_type: date
+        data_test:
+          - not_null
+          - accepted_values:
+            values :
+              - M
+              - F
+              - O
+              - N/A
       - name: income
-        description: "Income of the customer."
+        description: Income of the customer.
         data_type: numeric
         data_tests:
           - not_null
+      - name: subscribed_at
+        description: Date when the customer created an app account.
+        data_type: date
+        data_test:
+          - not_null
       - name: ingested_at
-        description: "Column with the current timestamp."
+        description: Column with the current timestamp.
         data_type: timestamp
+        data_test:
+          - not_null
