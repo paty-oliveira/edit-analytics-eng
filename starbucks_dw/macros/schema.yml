@@ -7,3 +7,9 @@ macros:
       - name: hours
         description: Number of hours.
         type: integer
+  - name: format_transation_type
+    description: convert transaction type by list
+    arguments:
+      - name: column
+        description: column to be used
+        type: text

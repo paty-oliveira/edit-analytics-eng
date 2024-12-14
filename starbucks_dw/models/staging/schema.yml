@@ -97,3 +97,44 @@ models:
         data_type: timestamp
         data_tests:
           - not_null
+  - name: stg_profile
+    description: >
+      Information about the profile of clients
+    columns:
+      - name: customer_id
+        description: Unique identifier/Surogate key for each offer.
+        data_type: integer
+        data_tests:
+          - not_null
+          - unique
+      - name: gender
+        description: gender of profile
+        data_type: text
+        data_tests:
+          - not_null
+          - accepted_values:
+              values:
+                - M
+                - F
+                - O
+                - N/A
+      - name: age
+        description: age from profile.
+        data_type: integer
+        data_tests:
+          - not_null
+      - name: income
+        description: income of a client.
+        data_type: float
+        data_tests:
+          - not_null
+      - name: subscribed_date
+        description: starting date of the member.
+        data_type: date
+        data_tests:
+          - not_null
+      - name: ingested_at
+        description: Timestamp when the data was ingested.
+        data_type: timestamp
+        data_tests:
+          - not_null
