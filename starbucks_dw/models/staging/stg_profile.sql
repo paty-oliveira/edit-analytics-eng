@@ -11,7 +11,7 @@ with
             id as customer_id,
             COALESCE(gender, 'N/A') as gender,
             age,
-            TO_DATE(became_member_on::text, 'YYYYMMDD') as became_member_on,
+            TO_DATE(became_member_on::text, 'YYYYMMDD') as subscribed_date,
             COALESCE(income, 0) as income,
             current_timestamp as ingested_at
         from {{ ref('profile') }}

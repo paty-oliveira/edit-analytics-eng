@@ -124,7 +124,7 @@ models:
           - not_null
         description: Age of the customer.
         data_type: integer
-      - name: became_member_on
+      - name: subscribed_date
         description: Date when the customer created an app account.
         data_type: date
         data_tests:
