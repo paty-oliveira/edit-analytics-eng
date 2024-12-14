@@ -15,7 +15,7 @@ with
             to_date(became_member_on::text,'YYYYMMDD') as subscribed_date,
             current_timestamp as ingested_at
         FROM {{ ref('profile') }}
-        WHERE age > 1 and age < 118
+        WHERE age < 118
     )
 
 select *
