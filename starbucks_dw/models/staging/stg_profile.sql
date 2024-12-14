@@ -23,7 +23,7 @@ WITH
             COALESCE(gender,'N/A') AS gender,
             age,
             id AS customer_id,
-            CAST(CAST(became_member_on AS TEXT) AS DATE) AS become_member_on,
+            CAST(CAST(became_member_on AS TEXT) AS DATE) AS subscribed_date,
             COALESCE(income,0) AS income,
             current_timestamp as ingested_at
         FROM {{ ref('profile') }}
