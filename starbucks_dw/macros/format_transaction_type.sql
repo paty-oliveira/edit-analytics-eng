@@ -7,4 +7,3 @@
         ELSE NULL
     END
 {% endmacro %}
-
