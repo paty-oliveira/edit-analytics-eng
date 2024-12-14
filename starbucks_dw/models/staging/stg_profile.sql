@@ -12,7 +12,7 @@ with
             COALESCE(gender, 'N/A') AS gender,
             COALESCE(income, 0) AS income,
             age,
-            to_date(became_member_on::TEXT, 'YYYYMMDD') as became_member_on,
+            to_date(became_member_on::TEXT, 'YYYYMMDD') as subscribed_date,
             current_timestamp as ingested_at
         from {{ ref('profile') }}
     )

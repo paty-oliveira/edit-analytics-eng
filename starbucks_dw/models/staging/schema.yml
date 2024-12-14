@@ -120,7 +120,7 @@ models:
         description: Income.
         data_tests:
           - not_null
-      - name: became_member_on
+      - name: subscribed_date
         description: Became member on.
         data_tests:
           - not_null
