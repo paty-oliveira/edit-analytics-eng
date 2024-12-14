@@ -1,12 +1,12 @@
-{% macro format_transaction_type(transaction_type) %}
+{% macro format_transaction_type(column) %}
     case 
-        when transaction_type = 'offer received'
+        when {{column}} = 'offer received'
         then 'received'
-        when transaction_type = 'offer viewed'
+        when {{column}} = 'offer viewed'
         then 'viewed'
-        when transaction_type = 'offer completed'
+        when {{column}} = 'offer completed'
         then 'completed'
-        when transaction_type = 'transaction'
+        when {{column}} = 'transaction'
         then 'transaction'
     end
 
