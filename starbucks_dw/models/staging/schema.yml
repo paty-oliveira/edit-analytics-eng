@@ -97,3 +97,20 @@ models:
         data_type: timestamp
         data_tests:
           - not_null
+  - name: stg_profile
+    description: >
+         Information about the customers that are part of the promotional offers program.
+    columns:
+        - name: customer_id
+          description: Unique identifier for each transaction.
+        - name: gender
+          description: Gender of the customer.
+        - name: age
+          description: Age of the customer.
+        - name: income
+          description: Income of the customer.
+        - name: become_member_date
+          description: Date when the customer created an app account.
+        - name: ingested_at
+          description: Data of ingested time.
+          
