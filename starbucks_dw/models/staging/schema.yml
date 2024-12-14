@@ -46,6 +46,28 @@ models:
         data_tests:
           - not_null
 
+  - name: stg_profile
+    description: >
+      Information about the customers that are part of the promotional offers program.
+    columns:
+      - name: gender
+        description: Gender of the customer.
+        data_type: text
+      - name: age
+        description: Age of the customer.
+        data_type: integer
+      - name: customer_id
+        description: Unique identifier for each customer.
+        data_type: text
+        data_tests:
+          - not_null
+      - name: become_member_on
+        description: Date when the customer createdan app account.
+        data_type: integer
+      - name: income
+        description: Income of the customer.
+        data_type: numeric
+
   - name: stg_transcript
     description: >
       Information about the different steps of promotional offers that a customer receives. It also
