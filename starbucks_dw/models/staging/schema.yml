@@ -97,3 +97,35 @@ models:
         data_type: timestamp
         data_tests:
           - not_null
+
+  - name: stg_profile
+    description: Information about the customers that are part of the promorrional offer.
+    columns:
+      - name: customer_id
+        description: Unique identifier for each customer.
+        data_tests:
+          - not_null
+          - unique
+      - name: gender
+        description: Gender.
+        data_tests:
+          - not_null
+          - accepted_values:
+              values: ['M','F','O', 'N/A']
+      - name: age
+        description: Age.
+        data_tests:
+          - not_null
+      - name: income
+        description: Income.
+        data_tests:
+          - not_null
+      - name: subscribed_date
+        description: Became member on.
+        data_tests:
+          - not_null
+      - name: ingested_at
+        description: Timestamp when the data was ingested.
+        data_type: timestamp
+        data_tests:
+          - not_null
