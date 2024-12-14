@@ -7,3 +7,13 @@ macros:
       - name: hours
         description: Number of hours.
         type: integer
+
+  - name: format_transaction_type
+    description: >
+      This macro uses Jinja to dynamically format values in the transaction_type column.
+      It converts values such as 'offer received', 'offer viewed', etc., into simplified states:
+      'received', 'viewed', 'completed', or 'transaction'.
+    arguments:
+      - name: column_name
+        description: Name of the SQL column (table.column) containing the transaction_type values.
+        type: text

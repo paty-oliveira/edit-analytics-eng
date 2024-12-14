@@ -34,15 +34,12 @@ seeds:
       Information about the customers that are part of the promotional offers program.
     config:
       column_types:
-        a: integer
         gender: text
         age: integer
         id: text
         become_member_on: integer
         income: numeric
     columns:
-      - name: a
-        description: Incremental counter for each row.
       - name: gender
         description: Gender of the customer.
       - name: age
