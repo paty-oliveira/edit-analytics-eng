@@ -39,7 +39,7 @@ with
             offers.difficulty_rank as offer_difficulty_rank,
             offers.duration as offer_duration,
             transactions.reward as offer_reward,
-            {{ format_transaction_type("transactions.transaction_type") }} as transaction_status, 
+            {{ format_transaction_type("transactions.transaction_type") }} as transaction_status,
             transactions.hours_since_start,
             transactions.days_since_start,
             current_timestamp as ingested_at
