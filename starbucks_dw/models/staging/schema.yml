@@ -120,11 +120,15 @@ models:
                 - O
                 - N/A
       - name: age
+        data_tests:
+          - not_null
         description: Age of the customer.
         data_type: integer
       - name: became_member_on
         description: Date when the customer created an app account.
         data_type: date
+        data_tests:
+          - not_null
       - name: income
         description: Income of the customer.
         data_type: numeric
