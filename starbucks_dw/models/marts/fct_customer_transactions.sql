@@ -1,4 +1,4 @@
-{# {{
+{{{
   config(
     materialized = 'table',
     )
@@ -49,4 +49,4 @@ with
     )
 
 select *
-from final #}
+from final }
