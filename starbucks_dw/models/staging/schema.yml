@@ -127,7 +127,7 @@ models:
         data_tests:
           - not_null
           - unique
-      - name: become_member_on
+      - name: subscribed_date
         description: Date when the customer created an app account.
         data_type: date
         data_tests:

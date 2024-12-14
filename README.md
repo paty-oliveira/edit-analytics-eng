@@ -9,28 +9,52 @@
 6. Ensure your code passes the automated tests.
 
 
-## Setup the environment
+## Setup the environment (Powershell terminal)
 In the folder `starbucks_dw`, run the following commands:
 
 1. **Create Python virtual environment:**
-
 ```
-    make create-venv
+    MacOS:
+    make create-venv 
+```
+```
+    Windows:
+    python -m venv venv
 ```
 
 2. **Activate your Python virtual enviroment:**
-
 ```
+    MacOS:
     source ./venv/bin/activate
+
+    Windows:
+    .\venv\Scripts\Activate
 ```
 
-3. **Initialise PostgresSQL database:**
+If the virtual environment is unable to be activated:
+
+```
+Get-ExecutionPolicy
+
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+
+.\venv\Scripts\Activate
+```
+
+3. **Initialise PostgresSQL database (UBUNTU(wsl) terminal):**
 
 Make sure you have Docker running on your machine:
 
 ```
-    make setup-postgres-db
+make setup-postgres-db
 ```
+
+If required install 'make', and then run the previous command:
+
+```
+sudo apt install make
+```
+
 If you want to use a graphic interface to access PostgreSQL, you can use Adminer. To do this, go to `localhost:8080` and then fill the credentials:
 
 - **Database Engine**: PostgreSQL
@@ -43,6 +67,12 @@ If you want to use a graphic interface to access PostgreSQL, you can use Adminer
 
 ```
     pre-commit install
+```
+
+If required install the pre-commit package:
+
+```
+    sudo apt install pre-commit
 ```
 
 5. **Check the database connection in dbt:**
