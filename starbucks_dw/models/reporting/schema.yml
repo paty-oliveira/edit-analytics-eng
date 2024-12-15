@@ -1,0 +1,68 @@
+version: 2
+
+models:
+  - name: channels_response_rate
+    description: >
+      Analyzes the impact of offer communication channels and types on customer response rates,
+      incorporating the difficulty rank of the offers to provide further insights.
+    columns:
+      - name: offer_channel
+        description: A list of channels through which the offer was received.
+        data_type: text
+        data_tests:
+          - not_null
+          - accepted_values:
+              values: ['email', 'mobile', 'web', 'social']
+      - name: offer_type
+        description: Type of offer.
+        data_type: text
+        data_tests:
+          - not_null
+          - accepted_values:
+              values: ['discount', 'bogo', 'informational']
+      - name: difficulty_rank
+        description: Minimum spending required to complete an offer.
+        data_type: integer
+        data_tests:
+          - not_null
+      - name: completed_response_rate
+        description: >
+          The rate of transactions where the offer has the status completed relative to the total transactions 
+          for a given channel and offer type.
+        data_type: numeric
+        data_tests:
+          - not_null
+      - name: viewed_response_rate
+        description: >
+          The rate of transactions where the offer has the status viewed relative to the total transactions 
+          for a given channel and offer type.
+        data_type: numeric
+        data_tests:
+          - not_null
+      - name: received_response_rate
+        description: >
+          The rate of transactions where the offer has the status received relative to the total transactions 
+          for a given channel and offer type.
+        data_type: numeric
+        data_tests:
+          - not_null
+      - name: completed_status_transactions
+        description: The total number of transactions with a status of completed for a given channel and offer type.
+        data_type: integer
+        data_tests:
+          - not_null
+      - name: viewed_status_transactions
+        description: The total number of transactions with a status of viewed for a given channel and offer type.
+        data_type: integer
+        data_tests:
+          - not_null
+      - name: received_status_transactions
+        description: The total number of transactions with a status of received for a given channel and offer type.
+        data_type: integer
+        data_tests:
+          - not_null
+      - name: total_transactions
+        description: The total number of transactions for a given channel and offer type.
+        data_type: integer
+        data_tests:
+          - not_null
