@@ -8,10 +8,12 @@
 select
     o.channel AS offer_channel,
     o.offer_type AS offer_type,
-    o.difficulty_rank AS difficulty_rank,
-    round((COUNT(CASE WHEN f.transaction_type IN ('completed', 'transaction') THEN 1 END) * 1.0) / COUNT(f.transaction_id),4) AS completed_response_rate,
-    round((COUNT(CASE WHEN f.transaction_type IN ('viewed', 'transaction') THEN 1 END) * 1.0) / COUNT(f.transaction_id),4) AS viewed_response_rate,
-    round((COUNT(CASE WHEN f.transaction_type IN ('received', 'transaction') THEN 1 END) * 1.0) / COUNT(f.transaction_id),4) AS received_response_rate,
+    o.difficulty_rank AS difficulty_rank, -- It will influence the number of transactions with complete status
+    -- Calculating response rates per status of offer transaction
+    ROUND((COUNT(CASE WHEN f.transaction_type IN ('completed', 'transaction') THEN 1 END) * 1.0) / COUNT(f.transaction_id),4) AS completed_response_rate,
+    ROUND((COUNT(CASE WHEN f.transaction_type IN ('viewed', 'transaction') THEN 1 END) * 1.0) / COUNT(f.transaction_id),4) AS viewed_response_rate,
+    ROUND((COUNT(CASE WHEN f.transaction_type IN ('received', 'transaction') THEN 1 END) * 1.0) / COUNT(f.transaction_id),4) AS received_response_rate,
+    -- Sum of offer transactions per status and total offer transactions
     COUNT(CASE WHEN f.transaction_type IN ('completed', 'transaction') THEN 1 END) AS completed_status_transactions,
     COUNT(CASE WHEN f.transaction_type IN ('viewed', 'transaction') THEN 1 END) AS viewed_status_transactions,
     COUNT(CASE WHEN f.transaction_type IN ('received', 'transaction') THEN 1 END) AS received_status_transactions,

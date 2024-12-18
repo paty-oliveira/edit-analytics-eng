@@ -66,3 +66,92 @@ models:
         data_type: integer
         data_tests:
           - not_null
+
+  - name: cust_segment_response
+    description: >
+      Segments customers based on demographic information (age, gender), 
+      purchase recency, and customer tenure to analyze response rates to promotional offers.
+    columns:
+      - name: age_bucket
+        description: The age category of the customer.
+        data_type: text
+        data_tests:
+          - not_null
+          - accepted_values:
+              values:
+                - Under 18
+                - 18-24
+                - 25-34
+                - 35-44
+                - 45-54
+                - 55-64
+                - 65-74
+                - 75-84
+                - 85-94
+                - 95+
+      - name: income_bucket
+        description: The income category of the customer.
+        data_type: text
+        data_tests:
+          - not_null
+          - accepted_values:
+              values:
+                - Below 30k
+                - 30k-40k
+                - 40k-60k
+                - 60k-80k
+                - 80k-100k
+                - 100k-120k
+                - 120k+
+      - name: customer_tenure
+        description: How long the customer has been subscribed to.
+        data_type: text
+        data_tests:
+          - not_null
+          - accepted_values:
+              values:
+                - New Customer (< 1 month)
+                - Established Customer (1-12 months)
+                - Loyal Customer (1-2 years)
+                - Long-term Customer (> 2 years)
+      - name: purchase_recency
+        description: The recency of the customer's last purchase.
+        data_type: text
+        data_tests:
+          - not_null
+          - accepted_values:
+              values:
+                - Recent Buyer (< 1 month)
+                - Engaged Buyer (1-3 months)
+                - Lapsed Buyer (> 3 months)
+      - name: gender
+        description: The gender of the customer.
+        data_type: text
+        data_tests:
+          - not_null
+          - accepted_values:
+              values:
+                - M
+                - F
+                - O
+                - N/A
+      - name: customer_count
+        description: The count of customers in each demographic segment.
+        data_type: integer
+        data_tests:
+          - not_null
+      - name: response_rate
+        description: The response rate to promotional offers in the given segment. Only considers transactions with 'completed' status.
+        data_type: numeric
+        data_tests:
+          - not_null
+      - name: completed_status_transactions
+        description: The number of transactions with 'completed' status in each segment.
+        data_type: integer
+        data_tests:
+          - not_null
+      - name: total_transactions
+        description: The total number of transactions in each segment.
+        data_type: integer
+        data_tests:
+          - not_null
