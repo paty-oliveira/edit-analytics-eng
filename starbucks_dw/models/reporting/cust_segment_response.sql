@@ -36,7 +36,7 @@ income_buckets AS (
             WHEN income >= 120001 THEN '120k+'
             ELSE 'Out of range'
         END AS income_bucket
-    from {{ ref('dim_customer') }} 
+    from {{ ref('dim_customer') }}
 ),
 customer_tenure AS (
     SELECT
@@ -65,21 +65,22 @@ final as (
     SELECT 
         ab.age_bucket,
         ib.income_bucket,
+        c.gender,
         ct.customer_tenure,
         pr.purchase_recency,
-        c.gender,
         COUNT(*) AS customer_count,
+        o.offer_type,
         ROUND(SUM(CASE WHEN fct.transaction_type = 'completed' THEN 1 ELSE 0 END) * 1.0 / COUNT(fct.transaction_id), 4) AS response_rate,
         COUNT(CASE WHEN fct.transaction_type = 'completed' THEN 1 END) AS completed_status_transactions,
         COUNT(fct.transaction_id) AS total_transactions
-    FROM fct_customer_transactions fct
-        LEFT JOIN dim_customer c ON fct.customer_id = c.customer_id
-        LEFT JOIN dim_offer o ON fct.offer_id = o.offer_id
+    from {{ ref('fct_customer_transactions') }} fct
+        LEFT JOIN {{ ref('dim_customer') }} c ON fct.customer_id = c.customer_id
+        LEFT JOIN{{ ref('dim_offer') }} o ON fct.offer_id = o.offer_id
         LEFT JOIN age_buckets ab ON c.customer_id = ab.customer_id
         LEFT JOIN income_buckets ib ON c.customer_id = ib.customer_id
         LEFT JOIN customer_tenure ct ON c.customer_id = ct.customer_id
         LEFT JOIN purchase_recency pr ON fct.customer_id = pr.customer_id
-    GROUP BY ab.age_bucket, ib.income_bucket, ct.customer_tenure, pr.purchase_recency, c.gender
+    GROUP BY ab.age_bucket, ib.income_bucket, c.gender, ct.customer_tenure, pr.purchase_recency, o.offer_type,
     ORDER BY response_rate DESC
 )
 
