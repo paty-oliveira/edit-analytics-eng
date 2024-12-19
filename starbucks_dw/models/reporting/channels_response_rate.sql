@@ -6,19 +6,17 @@
 
 
 select
-    o.channel AS offer_channel,
-    o.offer_type AS offer_type,
-    o.difficulty_rank AS difficulty_rank, -- It will influence the number of transactions with complete status
-    -- Calculating response rates per status of offer transaction
-    ROUND((COUNT(CASE WHEN f.transaction_type IN ('completed', 'transaction') THEN 1 END) * 1.0) / COUNT(f.transaction_id),4) AS completed_response_rate,
-    ROUND((COUNT(CASE WHEN f.transaction_type IN ('viewed', 'transaction') THEN 1 END) * 1.0) / COUNT(f.transaction_id),4) AS viewed_response_rate,
-    ROUND((COUNT(CASE WHEN f.transaction_type IN ('received', 'transaction') THEN 1 END) * 1.0) / COUNT(f.transaction_id),4) AS received_response_rate,
-    -- Sum of offer transactions per status and total offer transactions
-    COUNT(CASE WHEN f.transaction_type IN ('completed', 'transaction') THEN 1 END) AS completed_status_transactions,
-    COUNT(CASE WHEN f.transaction_type IN ('viewed', 'transaction') THEN 1 END) AS viewed_status_transactions,
-    COUNT(CASE WHEN f.transaction_type IN ('received', 'transaction') THEN 1 END) AS received_status_transactions,
-    COUNT(f.transaction_id) AS total_transactions
+    o.channel as offer_channel,
+    o.offer_type as offer_type,
+    o.difficulty_rank as difficulty_rank, 
+    {{ calculate_response_rate("f.transaction_type", ["completed"], "f.transaction_id", "completed_response_rate") }},
+    {{ calculate_response_rate("f.transaction_type", ["viewed"], "f.transaction_id", "viewed_response_rate") }},
+    {{ calculate_response_rate("f.transaction_type", ["received"], "f.transaction_id", "received_response_rate") }},
+    {{ count_transactions("f.transaction_type", ["completed"], "completed_status_transactions") }},
+    {{ count_transactions("f.transaction_type", ["viewed"], "viewed_status_transactions") }},
+    {{ count_transactions("f.transaction_type", ["received"], "received_status_transactions") }},
+    count(f.transaction_id) as total_transactions
 from {{ ref('fct_offer_transactions') }} f
 inner join {{ ref('dim_offer') }} o on f.offer_id = o.offer_id
 where f.transaction_type in ('received', 'viewed', 'completed', 'transaction')
-group by o.channel,o.offer_type,o.difficulty_rank
+group by o.channel, o.offer_type, o.difficulty_rank

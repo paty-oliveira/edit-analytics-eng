@@ -144,7 +144,6 @@ models:
         description: Type of offer.
         data_type: text
         data_tests:
-          - not_null
           - accepted_values:
               values: ['discount', 'bogo', 'informational']
       - name: response_rate

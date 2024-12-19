@@ -5,83 +5,83 @@
 }}
 
 
-WITH age_buckets AS (
-    SELECT
+with age_buckets as (
+    select
         customer_id,
-        CASE 
-            WHEN age < 18 THEN 'Under 18'
-            WHEN age BETWEEN 18 AND 24 THEN '18-24'
-            WHEN age BETWEEN 25 AND 34 THEN '25-34'
-            WHEN age BETWEEN 35 AND 44 THEN '35-44'
-            WHEN age BETWEEN 45 AND 54 THEN '45-54'
-            WHEN age BETWEEN 55 AND 64 THEN '55-64'
-            WHEN age BETWEEN 65 AND 74 THEN '65-74'
-            WHEN age BETWEEN 75 AND 84 THEN '75-84'
-            WHEN age BETWEEN 85 AND 94 THEN '85-94'
-            WHEN age >= 95 THEN '95+'
-            ELSE 'Unknown'
-        END AS age_bucket
+        case 
+            when age < 18 then 'Under 18'
+            when age between 18 AND 24 then '18-24'
+            when age between 25 AND 34 then '25-34'
+            when age between 35 AND 44 then '35-44'
+            when age between 45 AND 54 then '45-54'
+            when age between 55 AND 64 then '55-64'
+            when age between 65 AND 74 then '65-74'
+            when age between 75 AND 84 then '75-84'
+            when age between 85 AND 94 then '85-94'
+            when age >= 95 then '95+'
+            else 'Unknown'
+        end as age_bucket
     from {{ ref('dim_customer') }}
 ),
-income_buckets AS (
-    SELECT
+income_buckets as (
+    select
         customer_id,
-        CASE 
-            WHEN income < 30000 THEN 'Below 30k'
-            WHEN income BETWEEN 30000 AND 39999 THEN '30k-40k' 
-            WHEN income BETWEEN 40000 AND 59999 THEN '40k-60k'
-            WHEN income BETWEEN 60000 AND 79999 THEN '60k-80k'
-            WHEN income BETWEEN 80000 AND 99999 THEN '80k-100k'
-            WHEN income BETWEEN 100000 AND 120000 THEN '100k-120k'
-            WHEN income >= 120001 THEN '120k+'
-            ELSE 'Out of range'
-        END AS income_bucket
+        case 
+            when income < 30000 then 'Below 30k'
+            when income between 30000 and 39999 then '30k-40k' 
+            when income between 40000 and 59999 then '40k-60k'
+            when income between 60000 and 79999 then '60k-80k'
+            when income between 80000 and 99999 then '80k-100k'
+            when income between 100000 and 120000 then '100k-120k'
+            when income >= 120001 then '120k+'
+            else 'Out of range'
+        end as income_bucket
     from {{ ref('dim_customer') }}
 ),
-customer_tenure AS (
-    SELECT
+customer_tenure as (
+    select
         customer_id,
-        CASE
-            WHEN CURRENT_DATE - subscribed_date <= 30 THEN 'New Customer (< 1 month)'
-            WHEN CURRENT_DATE - subscribed_date BETWEEN 31 AND 365 THEN 'Established Customer (1-12 months)'
-            WHEN CURRENT_DATE - subscribed_date BETWEEN 366 AND 730 THEN 'Loyal Customer (1-2 years)Loyal Customer (1-2 years)'
-            WHEN CURRENT_DATE - subscribed_date > 730 THEN 'Long-term Customer (> 2 years)'
-        END AS customer_tenure
+        case
+            when current_date - subscribed_date <= 30 then 'New Customer (< 1 month)'
+            when current_date - subscribed_date between 31 and 365 then 'Established Customer (1-12 months)'
+            when current_date - subscribed_date between 366 and 730 then 'Loyal Customer (1-2 years)'
+            when current_date - subscribed_date > 730 then 'Long-term Customer (> 2 years)'
+        end as customer_tenure
     from {{ ref('dim_customer') }}
 ),
-purchase_recency AS (
-    SELECT
+purchase_recency as (
+    select
         customer_id,
-        CASE
-            WHEN CURRENT_DATE - DATE(ingested_at) <= 30 THEN 'Recent Buyer (< 1 month)'
-            WHEN CURRENT_DATE - DATE(ingested_at) BETWEEN 31 AND 90 THEN 'Engaged Buyer (1-3 months)'
-            WHEN CURRENT_DATE - DATE(ingested_at) > 90 THEN 'Lapsed Buyer (> 3 months)'
-            ELSE 'Unknown'
-        END AS purchase_recency
+        case
+            when current_date - date(ingested_at) <= 30 then 'Recent Buyer (< 1 month)'
+            when current_date- date(ingested_at) between 31 and 90 then 'Engaged Buyer (1-3 months)'
+            when current_date - date(ingested_at) > 90 then 'Lapsed Buyer (> 3 months)'
+            else 'Unknown'
+        end as purchase_recency
     from {{ ref('fct_customer_transactions') }}
 ),
 
 final as (
-    SELECT 
+    select
         ab.age_bucket,
         ib.income_bucket,
         c.gender,
         ct.customer_tenure,
         pr.purchase_recency,
-        COUNT(*) AS customer_count,
+        count(*) as customer_count,
         o.offer_type,
-        ROUND(SUM(CASE WHEN fct.transaction_type = 'completed' THEN 1 ELSE 0 END) * 1.0 / COUNT(fct.transaction_id), 4) AS response_rate,
-        COUNT(CASE WHEN fct.transaction_type = 'completed' THEN 1 END) AS completed_status_transactions,
-        COUNT(fct.transaction_id) AS total_transactions
+        {{ calculate_response_rate("fct.transaction_type", ["completed"], "fct.transaction_id", "response_rate") }},
+        {{ count_transactions("fct.transaction_type", ["completed"], "completed_status_transactions") }},
+        count(fct.transaction_id) as total_transactions
     from {{ ref('fct_customer_transactions') }} fct
-        LEFT JOIN {{ ref('dim_customer') }} c ON fct.customer_id = c.customer_id
-        LEFT JOIN{{ ref('dim_offer') }} o ON fct.offer_id = o.offer_id
-        LEFT JOIN age_buckets ab ON c.customer_id = ab.customer_id
-        LEFT JOIN income_buckets ib ON c.customer_id = ib.customer_id
-        LEFT JOIN customer_tenure ct ON c.customer_id = ct.customer_id
-        LEFT JOIN purchase_recency pr ON fct.customer_id = pr.customer_id
-    GROUP BY ab.age_bucket, ib.income_bucket, c.gender, ct.customer_tenure, pr.purchase_recency, o.offer_type,
-    ORDER BY response_rate DESC
+        left join {{ ref('dim_customer') }} c on fct.customer_id = c.customer_id
+        left join {{ ref('dim_offer') }} o on fct.offer_id = o.offer_id
+        left join age_buckets ab on c.customer_id = ab.customer_id
+        left join income_buckets ib on c.customer_id = ib.customer_id
+        left join customer_tenure ct on c.customer_id = ct.customer_id
+        left join purchase_recency pr on fct.customer_id = pr.customer_id
+    group by ab.age_bucket, ib.income_bucket, c.gender, ct.customer_tenure, pr.purchase_recency, o.offer_type
+    order by response_rate desc
 )
 
 select *
