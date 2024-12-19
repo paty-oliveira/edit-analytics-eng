@@ -7,3 +7,51 @@ macros:
       - name: hours
         description: Number of hours.
         type: integer
+
+  - name: format_transaction_type
+    description: >
+      This macro uses Jinja to dynamically format values in the transaction_type column.
+      It converts values such as 'offer received', 'offer viewed', etc., into simplified states:
+      'received', 'viewed', 'completed', or 'transaction'.
+    arguments:
+      - name: column_name
+        description: Name of the SQL column (table.column) containing the transaction_type values.
+        type: text
+
+  - name: count_transactions
+    description: >
+      This macro counts the number of transactions types per offer status. 
+      Returns a `COUNT` aggregate expression.
+    arguments:
+      - name: column_name
+        description: The column to evaluate transaction types.
+        type: string
+      - name: statuses
+        description: >
+          A list of statuses to check for in the `column_name`. Transactions 
+          with these statuses will be counted.
+        type: list
+      - name: alias
+        description: The alias name for the resulting column.
+        type: string
+
+  - name: calculate_response_rate
+    description: >
+      This macro calculates the response rate for specific offer statuses. 
+      It divides the count of matching transaction types by the total count of a given column.
+    arguments:
+      - name: column_name
+        description: The column to evaluate transaction types.
+        type: string
+      - name: statuses
+        description: >
+          A list of statuses to check for in the `column_name`. Transactions 
+          with these statuses will be included in the numerator of the calculation.
+        type: list
+      - name: total_count_column
+        description: >
+          The column used as the denominator for the status response rate calculation.
+        type: string
+      - name: alias
+        description: The alias name for the resulting status response rate column.
+        type: string

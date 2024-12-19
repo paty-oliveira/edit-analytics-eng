@@ -1,0 +1,163 @@
+version: 2
+
+models:
+  - name: channels_response_rate
+    description: >
+      Analyzes the impact of offer communication channels and types on customer response rates,
+      incorporating the difficulty rank of the offers to provide further insights.
+    columns:
+      - name: offer_channel
+        description: A list of channels through which the offer was received.
+        data_type: text
+        data_tests:
+          - not_null
+          - accepted_values:
+              values: ['email', 'mobile', 'web', 'social']
+      - name: offer_type
+        description: Type of offer.
+        data_type: text
+        data_tests:
+          - not_null
+          - accepted_values:
+              values: ['discount', 'bogo', 'informational']
+      - name: difficulty_rank
+        description: Minimum spending required to complete an offer.
+        data_type: integer
+        data_tests:
+          - not_null
+      - name: completed_response_rate
+        description: >
+          The rate of transactions where the offer has the status completed relative to the total transactions 
+          for a given channel and offer type.
+        data_type: numeric
+        data_tests:
+          - not_null
+      - name: viewed_response_rate
+        description: >
+          The rate of transactions where the offer has the status viewed relative to the total transactions 
+          for a given channel and offer type.
+        data_type: numeric
+        data_tests:
+          - not_null
+      - name: received_response_rate
+        description: >
+          The rate of transactions where the offer has the status received relative to the total transactions 
+          for a given channel and offer type.
+        data_type: numeric
+        data_tests:
+          - not_null
+      - name: completed_status_transactions
+        description: The total number of transactions with a status of completed for a given channel and offer type.
+        data_type: integer
+        data_tests:
+          - not_null
+      - name: viewed_status_transactions
+        description: The total number of transactions with a status of viewed for a given channel and offer type.
+        data_type: integer
+        data_tests:
+          - not_null
+      - name: received_status_transactions
+        description: The total number of transactions with a status of received for a given channel and offer type.
+        data_type: integer
+        data_tests:
+          - not_null
+      - name: total_transactions
+        description: The total number of transactions for a given channel and offer type.
+        data_type: integer
+        data_tests:
+          - not_null
+
+  - name: cust_segment_response
+    description: >
+      Segments customers based on demographic information (age, gender), 
+      purchase recency, and customer tenure to analyze response rates to promotional offers.
+    columns:
+      - name: age_bucket
+        description: Age category of the customer.
+        data_type: text
+        data_tests:
+          - not_null
+          - accepted_values:
+              values:
+                - Under 18
+                - 18-24
+                - 25-34
+                - 35-44
+                - 45-54
+                - 55-64
+                - 65-74
+                - 75-84
+                - 85-94
+                - 95+
+      - name: income_bucket
+        description: Income category of the customer.
+        data_type: text
+        data_tests:
+          - not_null
+          - accepted_values:
+              values:
+                - Below 30k
+                - 30k-40k
+                - 40k-60k
+                - 60k-80k
+                - 80k-100k
+                - 100k-120k
+                - 120k+
+      - name: gender
+        description: Gender of the customer.
+        data_type: text
+        data_tests:
+          - not_null
+          - accepted_values:
+              values:
+                - M
+                - F
+                - O
+                - N/A
+      - name: customer_tenure
+        description: How long the customer has been subscribed to.
+        data_type: text
+        data_tests:
+          - not_null
+          - accepted_values:
+              values:
+                - New Customer (< 1 month)
+                - Established Customer (1-12 months)
+                - Loyal Customer (1-2 years)
+                - Long-term Customer (> 2 years)
+      - name: purchase_recency
+        description: Recency of the customer's last purchase.
+        data_type: text
+        data_tests:
+          - not_null
+          - accepted_values:
+              values:
+                - Recent Buyer (< 1 month)
+                - Engaged Buyer (1-3 months)
+                - Lapsed Buyer (> 3 months)
+      - name: customer_count
+        description: Count of customers in each demographic segment.
+        data_type: integer
+        data_tests:
+          - not_null
+      - name: offer_type
+        description: Type of offer.
+        data_type: text
+        data_tests:
+          - accepted_values:
+              values: ['discount', 'bogo', 'informational']
+      - name: response_rate
+        description: Response rate to promotional offers in the given segment. Only considers transactions with 'completed' status.
+        data_type: numeric
+        data_tests:
+          - not_null
+      - name: completed_status_transactions
+        description: Number of transactions with 'completed' status in each segment.
+        data_type: integer
+        data_tests:
+          - not_null
+      - name: total_transactions
+        description: Total number of transactions per segment.
+        data_type: integer
+        data_tests:
+          - not_null

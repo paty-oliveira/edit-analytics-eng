@@ -228,7 +228,7 @@ models:
         data_type: numeric
         data_tests:
           - not_null
-      - name: transaction_status
+      - name: transaction_type
         description: Status of the transaction.
         data_type: text
         data_tests:
@@ -255,7 +255,7 @@ models:
         data_tests:
           - not_null
 
-  - name: fact_customer_transactions
+  - name: fct_customer_transactions
     description: >
       Fact table about the customer transactions through the promotional offers program.
     columns:
@@ -299,7 +299,7 @@ models:
         data_type: numeric
         data_tests:
           - not_null
-      - name: transaction_status
+      - name: transaction_type
         description: Status of the transaction.
         data_type: text
         data_tests:
