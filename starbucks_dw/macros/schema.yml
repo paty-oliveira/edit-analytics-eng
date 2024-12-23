@@ -7,3 +7,9 @@ macros:
       - name: hours
         description: Number of hours.
         type: integer
+  - name: format_transaction_type
+    description: Convert transaction type without offer.
+    arguments:
+      - name: transaction_type
+        description: Type of transaction.
+        type: string

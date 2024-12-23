@@ -1,0 +1,45 @@
+version: 2
+
+models:
+  - name: customer_segmentation
+    description: This model shows the responsiveness to promotional offers by customers.
+    columns:
+      - name: customer_id
+        description: Unique identifier for each customer.
+        data_tests:
+          - unique
+          - not_null
+      - name: gender
+        description: The gender of the customer.
+      - name: age
+        description: The age of the customer.
+      - name: income
+        description: The income of the customer.
+      - name: response_rate
+        description: The proportion of completed transactions out of all offers received by the customer.
+        data_tests:
+          - not_null
+      - name: responsiveness_segment
+        description: Categorizes customers into segments based on their response rate.
+        accepted_values:
+          values:
+            - Highly Responsive
+            - Moderately Responsive
+            - Low Responsive
+            - Unresponsive
+
+  - name: channel_effectiveness
+    description: This model evaluates the effectiveness of various communication channels.
+    columns:
+      - name: channel
+        description: The communication channel used to deliver the offer.
+        data_tests:
+          - not_null
+      - name: response_rate
+        description: The proportion of offers completed via the channel out of all offers sent through it.
+        data_tests:
+          - not_null
+      - name: total_offers
+        description: The total number of offers sent via the channel.
+      - name: total_completions
+        description: The number of completed transactions associated with the channel.
