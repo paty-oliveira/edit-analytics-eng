@@ -1,4 +1,3 @@
-/* TO BE IMPLEMENTED BY THE STUDENT */
 {{
   config(
     materialized = 'view',
