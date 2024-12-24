@@ -7,3 +7,8 @@ macros:
       - name: hours
         description: Number of hours.
         type: integer
+  - name: format_transaction_type
+    description: Rename transaction types
+    arguments:
+      - name: collumn
+        description: Column name

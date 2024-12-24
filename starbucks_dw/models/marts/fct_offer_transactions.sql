@@ -39,16 +39,7 @@ with
             offers.difficulty_rank as offer_difficulty_rank,
             offers.duration as offer_duration,
             transactions.reward as offer_reward,
-            case
-                when transactions.transaction_type = 'offer received'
-                then 'received'
-                when transactions.transaction_type = 'offer viewed'
-                then 'viewed'
-                when transactions.transaction_type = 'offer completed'
-                then 'completed'
-                when transactions.transaction_type = 'transaction'
-                then 'transaction'
-            end as transaction_status,
+            {{ format_transaction_type('transactions.transaction_type') }},
             transactions.hours_since_start,
             transactions.days_since_start,
             current_timestamp as ingested_at
