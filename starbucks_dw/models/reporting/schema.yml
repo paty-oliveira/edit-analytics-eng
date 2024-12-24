@@ -1,0 +1,103 @@
+version: 2
+
+models:
+  - name: report_channel_effectiveness
+    description: >
+     Aggregated information about customer response rates by communication channel.
+    columns:
+      - name: offer_channel
+        description: A list of channels through which the offer was received.
+        data_type: text
+        data_tests:
+          - not_null
+          - accepted_values:
+              values:
+                - email
+                - mobile
+                - social
+                - web
+      - name: offer_type
+        description: Type of offer excluding informational only.
+        data_type: text
+        data_tests:
+          - not_null
+          - accepted_values:
+              values:
+                - bogo
+                - discount
+                - all
+      - name: received
+        description: Count of offers with status received.
+        data_type: integer
+        data_tests:
+          - not_null
+      - name: viewed
+        description: Count of offers with status viewed.
+        data_type: integer
+        data_tests:
+          - not_null
+      - name: completed
+        description: Count of offers with status completed.
+        data_type: integer
+        data_tests:
+          - not_null
+      - name: completion_percent
+        description: Percentage of received offers that have reached completed status. (completed/received*100)
+        data_type: integer
+        data_tests:
+          - not_null
+
+  - name: report_customer_reponse
+    description: >
+      Information about customer responses to offers grouped by customer categories: income ranges, age ranges, and gender.
+    columns:
+      - name: age_buckets
+        description: Category grouping customer ages into ranges to simplify analysis.
+        data_type: text
+        data_tests:
+          - not_null
+      - name: income_buckets
+        description: Category grouping customer incomes into ranges to simplify analysis.
+        data_type: text
+        data_tests:
+          - not_null
+      - name: gender
+        description: Gender of the customer.
+        data_type: text
+        data_tests:
+          - not_null
+          - accepted_values:
+              values:
+                - M
+                - F
+                - O
+                - N/A
+      - name: offer_type
+        description:  Type of offer excluding informational only.
+        data_type: text
+        data_tests:
+          - not_null
+          - accepted_values:
+              values:
+                - bogo
+                - discount
+      - name: received
+        description: Count of offers with status viewed.
+        data_type: integer
+        data_tests:
+          - not_null
+      - name: viewed
+        description: Count of offers with status viewed.
+        data_type: integer
+        data_tests:
+          - not_null
+      - name: transaction
+        description: Count of offers with status viewed.
+        data_type: integer
+        data_tests:
+          - not_null
+      - name: completed
+        description: Count of offers with status viewed.
+        data_type: integer
+        data_tests:
+          - not_null
